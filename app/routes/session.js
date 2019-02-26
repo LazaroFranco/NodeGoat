@@ -57,8 +57,6 @@ function SessionHandler(db) {
 
         userDAO.validateLogin(userName, password, function(err, user) {
             var errorMessage = "Invalid username and/or password";
-            var invalidUserNameErrorMessage = "Invalid username";
-            var invalidPasswordErrorMessage = "Invalid password";
             if (err) {
                 if (err.noSuchUser) {
                     console.log('Error: attempt to login with invalid user: ', userName);
@@ -78,7 +76,7 @@ function SessionHandler(db) {
                     return res.render("login", {
                         userName: userName,
                         password: "",
-                        loginError: invalidUserNameErrorMessage
+                        loginError: errorMessage
                         //Fix for A2-2 Broken Auth - Uses identical error for both username, password error
                         // loginError: errorMessage
                     });
@@ -86,7 +84,7 @@ function SessionHandler(db) {
                     return res.render("login", {
                         userName: userName,
                         password: "",
-                        loginError: invalidPasswordErrorMessage
+                        loginError: errorMessage
                         //Fix for A2-2 Broken Auth - Uses identical error for both username, password error
                         // loginError: errorMessage
 
@@ -122,7 +120,7 @@ function SessionHandler(db) {
           req.session.regenerate(function() {
 
             req.session.userId = user._id;
-            
+
             if (user.isAdmin) {
               return res.redirect("/benefits");
             } else {
