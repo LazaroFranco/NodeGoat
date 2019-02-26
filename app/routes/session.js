@@ -98,10 +98,22 @@ function SessionHandler(db) {
 
             // A2-Broken Authentication and Session Management
             // Upon login, a security best practice with regards to cookies session management
+            // Enable session management using express middleware
+            app.use(express.cookieParser());
             // would be to regenerate the session id so that if an id was already created for
             // a user on an insecure medium (i.e: non-HTTPS website or otherwise), or if an
+            app.use(express.session({
+                secret: "s3Cur3",
+                cookie: {
+                    httpOnly: true,
+                    secure: true
+                }
+            }));
             // attacker was able to get their hands on the cookie id before the user logged-in,
             // then the old session id will render useless as the logged-in user with new privileges
+            req.session.destroy(function() {
+                res.redirect("/");
+            });
             // holds a new session id now.
 
             // Fix the problem by regenerating a session in each login
