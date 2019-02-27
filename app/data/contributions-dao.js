@@ -15,6 +15,7 @@ function ContributionsDAO(db) {
     var userDAO = new UserDAO(db);
 
     this.update = function(userId, preTax, afterTax, roth, callback) {
+      "use strict"
         var parsedUserId = parseInt(userId);
 
         // Create contributions document
@@ -32,6 +33,7 @@ function ContributionsDAO(db) {
                 upsert: true
             },
             function(err, result) {
+              "use strict"
                 if (!err) {
                     console.log("Updated contributions");
                     // add user details
@@ -58,6 +60,7 @@ function ContributionsDAO(db) {
                 userId: userId
             },
             function(err, contributions) {
+              "use strict"
                 if (err) return callback(err, null);
 
                 // Set defualt contributions if not set
