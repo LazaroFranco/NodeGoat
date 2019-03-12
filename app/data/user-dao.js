@@ -16,15 +16,17 @@ function UserDAO(db) {
 
     this.addUser = function(userName, firstName, lastName, password, email, callback) {
 
+        // Generate password hash
+        var salt = bcrypt.genSaltSync();
+        var passwordHash = bcrypt.hashSync(password, salt);
+
         // Create user document
         var user = {
             userName: userName,
             firstName: firstName,
             lastName: lastName,
-            benefitStartDate: this.getRandomFutureDate(),
-            password: bcrypt.hashSync(password, bcrypt.genSaltSync())
+            password: passwordHash
         };
-
         // Add email if set
         if (email !== "") {
             user.email = email;
