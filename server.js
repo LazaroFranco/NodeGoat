@@ -37,12 +37,12 @@ MongoClient.connect(config.db, function(err, db) {
     }
     console.log("Connected to the database: " + config.db);
 
-    /*
+
     // Fix for A5 - Security MisConfig
     // TODO: Review the rest of helmet options, like "xssFilter"
     // Remove default x-powered-by response header
     app.disable("x-powered-by");
-
+/*
     // Prevent opening page in frame or iframe to protect from clickjacking
     app.use(helmet.xframe());
 
@@ -81,6 +81,7 @@ MongoClient.connect(config.db, function(err, db) {
         secret: "s3Cur3",
         saveUninitialized: false,
         resave: false,
+        key: "sessionId",
         cookie: {
             httpOnly: true,
             // Remember to start an HTTPS server to get this working
